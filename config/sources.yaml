@@ -1,0 +1,78 @@
+# David Times sources. One source = one line. Add or remove lines freely.
+# Source types: rss | guardian_api | jolpica | football_data | datos_gov_trm
+# A source with a missing API key is skipped, not failed.
+
+settings:
+  reading_time_minutes: 30
+  words_per_minute: 220
+  lookback_hours: 36
+  words_per_piece: 350          # used to derive how many pieces a section gets
+  max_article_chars: 6000       # truncation per source article before the LLM
+  min_article_chars: 600        # shorter extracted text counts as paywalled/too thin
+  max_sources_per_cluster: 3
+  extra_candidates: 2           # spares curation returns so synthesis can drop weak ones
+  timezone: America/Bogota
+  user_agent: "DavidTimes/0.1 (personal RSS reader)"
+
+sections:
+  - id: f1
+    name: Fórmula 1
+    language: es
+    weight: 1.0
+    recap_mode: "No hubo carrera en la ventana. Escribe un repaso semanal y un adelanto de la próxima carrera, más análisis del campeonato."
+    sources:
+      - {type: jolpica, name: Jolpica-F1}
+      - {type: guardian_api, name: The Guardian API (F1), tag: sport/formulaone}
+      - {type: rss, name: BBC Sport F1, url: "https://feeds.bbci.co.uk/sport/formula1/rss.xml"}
+      - {type: rss, name: Autosport, url: "https://www.autosport.com/rss/f1/news/"}
+      - {type: rss, name: Motorsport.com, url: "https://www.motorsport.com/rss/f1/news/"}
+      - {type: rss, name: RaceFans, url: "https://www.racefans.net/feed/"}
+      - {type: rss, name: The Guardian F1, url: "https://www.theguardian.com/sport/formulaone/rss"}
+
+  - id: premier-league
+    name: Premier League
+    language: es
+    weight: 1.0
+    recap_mode: "No hubo jornada en la ventana. Escribe un repaso semanal, un adelanto de la próxima jornada o un análisis de fichajes y de la tabla."
+    sources:
+      - {type: football_data, name: football-data.org, competition: PL}
+      - {type: guardian_api, name: The Guardian API (PL), tag: football/premierleague}
+      - {type: rss, name: The Guardian PL, url: "https://www.theguardian.com/football/premierleague/rss"}
+      - {type: rss, name: BBC Sport PL, url: "https://feeds.bbci.co.uk/sport/football/premier-league/rss.xml"}
+      - {type: rss, name: Sky Sports, url: "https://www.skysports.com/rss/12040"}
+      - {type: rss, name: ESPN, url: "https://www.espn.com/espn/rss/soccer/news"}
+
+  - id: economia-colombia
+    name: Economía Colombia
+    language: es
+    weight: 1.2
+    sources:
+      - {type: datos_gov_trm, name: TRM (datos.gov.co)}
+      - {type: rss, name: El Tiempo, url: "https://www.eltiempo.com/rss/economia.xml"}
+      - {type: rss, name: La República, url: "https://www.larepublica.co/rss/economia"}
+      - {type: rss, name: Portafolio, url: "https://www.portafolio.co/rss/economia.xml"}
+      - {type: rss, name: Valora Analitik, url: "https://www.valoraanalitik.com/feed/"}
+
+  - id: economia-mundial
+    name: Economía mundial
+    language: es
+    weight: 1.2
+    sources:
+      - {type: guardian_api, name: The Guardian API (Business), section: business}
+      - {type: rss, name: BBC Business, url: "https://feeds.bbci.co.uk/news/business/rss.xml"}
+      - {type: rss, name: The Guardian Business, url: "https://www.theguardian.com/business/rss"}
+      - {type: rss, name: CNBC Economy, url: "https://www.cnbc.com/id/20910258/device/rss/rss.html"}
+      - {type: rss, name: NPR Economy, url: "https://feeds.npr.org/1017/rss.xml"}
+      - {type: rss, name: Project Syndicate, url: "https://www.project-syndicate.org/rss"}
+
+  - id: cultura
+    name: Cultura
+    language: es
+    weight: 1.2
+    sources:
+      - {type: guardian_api, name: The Guardian API (Culture), section: culture}
+      - {type: rss, name: The Guardian Culture, url: "https://www.theguardian.com/culture/rss"}
+      - {type: rss, name: El País Cultura, url: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/cultura/portada"}
+      - {type: rss, name: Literary Hub, url: "https://lithub.com/feed/"}
+      - {type: rss, name: The Marginalian, url: "https://www.themarginalian.org/feed/"}
+      - {type: rss, name: Open Culture, url: "https://www.openculture.com/feed"}

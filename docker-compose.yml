@@ -1,0 +1,38 @@
+services:
+  build:
+    build: .
+    image: davidtimes:latest
+    entrypoint: ["davidtimes", "build"]   # extra args are appended: `docker compose run --rm build --force`
+    command: []
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./dist:/app/dist
+      - cache:/data
+    profiles: ["jobs"]
+
+  check-sources:
+    image: davidtimes:latest
+    build: .
+    entrypoint: ["davidtimes", "check-sources"]
+    env_file:
+      - path: .env
+        required: false
+    profiles: ["jobs"]
+
+  serve:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html:ro
+    healthcheck:
+      # Any HTTP answer (even 403 before the first build) means nginx is up.
+      test: ["CMD-SHELL", "wget -q -S -O /dev/null http://127.0.0.1/ 2>&1 | grep -q 'HTTP/'"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  cache:

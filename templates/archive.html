@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ t.archive }} — David Times{% endblock %}
+{% block body %}
+<nav class="pager"><a href="index.html">← {{ t.index }}</a></nav>
+<main>
+  <h1>{{ t.archive }}</h1>
+  <ul>
+  {% for d in editions %}
+    <li><a href="{{ d }}/index.html">{{ d }}</a></li>
+  {% endfor %}
+  </ul>
+</main>
+{% endblock %}

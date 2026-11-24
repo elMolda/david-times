@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} — David Times{% endblock %}
+{% macro navlinks() %}
+<nav class="pager">
+  <a href="index.html">← {{ t.index }}</a>
+  <a href="{{ next }}">{{ t.next }} →</a>
+</nav>
+{% endmacro %}
+{% block body %}
+{{ navlinks() }}
+<article>
+  <p class="kicker">{{ page.section.name }}{% if page.piece %} · {{ page.minutes }} {{ t.min }}{% endif %}</p>
+{% if page.piece %}
+  <h1>{{ page.piece.headline }}</h1>
+  {% if page.piece.standfirst %}<p class="standfirst">{{ page.piece.standfirst }}</p>{% endif %}
+  {% for para in page.piece.paragraphs %}
+  <p>{{ para }}</p>
+  {% endfor %}
+  <footer class="sources">
+    <p>{{ t.sources }}:</p>
+    <ul>
+    {% for outlet, url in page.piece.sources %}
+      <li>{{ outlet }}: <a href="{{ url }}">{{ url }}</a></li>
+    {% endfor %}
+    </ul>
+  </footer>
+{% else %}
+  <h1>{{ page.title }}</h1>
+  {% for block in page.blocks %}
+  <table>
+    <caption>{{ block.title }}</caption>
+    <thead><tr>{% for col in block.columns %}<th scope="col">{{ col }}</th>{% endfor %}</tr></thead>
+    <tbody>
+    {% for row in block.rows %}
+      <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if block.note %}<p class="meta">{{ block.note }}</p>{% endif %}
+  {% endfor %}
+{% endif %}
+</article>
+{{ navlinks() }}
+{% endblock %}

@@ -1,0 +1,10 @@
+dist/
+.env
+.env.*
+!.env.example
+.cache/
+.venv/
+.git/
+**/__pycache__/
+**/*.pyc
+.pytest_cache/

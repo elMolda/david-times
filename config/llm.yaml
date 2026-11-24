@@ -1,0 +1,35 @@
+# LLM providers, tried in order. A provider whose API key env var is empty is skipped.
+# Adding a provider = adding an entry here. Model names live only in this file.
+# `params` are passed as-is to chat.completions.create (e.g. reasoning_effort).
+
+requests_per_minute: 8        # client-side throttle per provider (free tiers)
+max_calls_per_run: 40         # hard guard; the run stops calling the LLM after this
+temperature: 0.3
+timeout_seconds: 120
+json_mode: true               # send response_format={"type": "json_object"}
+
+providers:
+  - name: gemini
+    base_url: "https://generativelanguage.googleapis.com/v1beta/openai/"
+    api_key_env: GEMINI_API_KEY
+    models:
+      curate: gemini-3.5-flash-lite      # stable Flash-Lite (checked Nov 2026)
+      synthesize: gemini-3.8-flash       # stable Flash (checked Nov 2026)
+    params:
+      synthesize: {reasoning_effort: low} # Gemini 3 cannot disable thinking; "minimal" errors on 3.8 Flash
+
+  # Fallbacks: model names NOT verified; check the provider's model list before relying on them.
+  - name: groq
+    base_url: "https://api.groq.com/openai/v1"
+    api_key_env: GROQ_API_KEY
+    models:
+      curate: llama-3.1-8b-instant
+      synthesize: llama-3.3-70b-versatile
+
+  - name: openrouter
+    base_url: "https://openrouter.ai/api/v1"
+    api_key_env: OPENROUTER_API_KEY
+    json_mode: false
+    models:
+      curate: "meta-llama/llama-3.3-70b-instruct:free"
+      synthesize: "meta-llama/llama-3.3-70b-instruct:free"

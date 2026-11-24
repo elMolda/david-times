@@ -1,0 +1,19 @@
+<nav class="toc">
+{% for section in edition.sections %}
+  {% set st = TEXT[section.language] %}
+  <section lang="{{ section.language }}">
+    <h2>{{ section.name }} <span class="meta">· {{ section_minutes[section.id] }} min</span></h2>
+    {% if section.recap %}<p class="note">{{ st.recap }}</p>{% endif %}
+    {% if section.note %}<p class="note">{{ section.note }}</p>{% endif %}
+    <ol>
+    {% for page in pages if page.section.id == section.id %}
+      <li><a href="{{ prefix }}{{ page.file }}">{{ page.title }}</a>
+        {% if page.piece %}<span class="meta">· {{ page.minutes }} min</span>{% endif %}
+        {% if page.piece and page.piece.standfirst %}<br><span class="standfirst">{{ page.piece.standfirst }}</span>{% endif %}
+      </li>
+    {% endfor %}
+    </ol>
+    {% if not section.pieces and not section.blocks %}<p class="note">{{ st.empty }}</p>{% endif %}
+  </section>
+{% endfor %}
+</nav>

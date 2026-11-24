@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel>
+  <title>Fixture F1</title>
+  <link>https://example.com/</link>
+  <item>
+    <title>Verstappen wins &amp; extends lead</title>
+    <link>https://example.com/f1/verstappen-wins?utm_source=rss</link>
+    <pubDate>Mon, 23 Nov 2026 22:00:00 GMT</pubDate>
+    <description>&lt;p&gt;Short teaser.&lt;/p&gt;</description>
+    <content:encoded><![CDATA[<p>First paragraph of the full body.</p><p>Second paragraph.</p><p>Advertisement</p>]]></content:encoded>
+  </item>
+  <item>
+    <title>Old story</title>
+    <link>https://example.com/f1/old</link>
+    <pubDate>Mon, 02 Nov 2026 10:00:00 GMT</pubDate>
+    <description>Old.</description>
+  </item>
+  <item>
+    <title>Item with no link</title>
+  </item>
+</channel>
+</rss>

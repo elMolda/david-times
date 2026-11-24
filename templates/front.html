@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}David Times — {{ edition.date.isoformat() }}{% endblock %}
+{% block body %}
+<header class="masthead">
+  <h1>David Times</h1>
+  <p class="dateline">{{ date_text }}</p>
+  <p class="meta">{{ t.about.format(m=total_minutes) }} · {{ t.target.format(m=edition.target_minutes) }}</p>
+</header>
+<main>
+{% include "toc.html" %}
+</main>
+<footer>
+  <p><a href="{{ root }}archive.html">{{ t.archive }}</a></p>
+</footer>
+{% endblock %}
